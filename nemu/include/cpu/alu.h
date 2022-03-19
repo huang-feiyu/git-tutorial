@@ -41,22 +41,26 @@ int32_t alu_imod(int64_t src, int64_t dest);
 void set_PF(uint32_t result);
 void set_ZF(uint32_t result, size_t data_size);
 void set_SF(uint32_t result, size_t data_size);
-
 // add
 void set_CF_add(uint32_t result, uint32_t dest, size_t data_size);
 void set_OF_add(uint32_t result, uint32_t src, uint32_t dest, size_t data_size);
-
 // adc
 void set_CF_adc(uint32_t result, uint32_t dest, bool cf, size_t data_size);
 void set_OF_adc(uint32_t result, uint32_t src, uint32_t dest, size_t data_size);
-
 // sub
 void set_CF_sub(uint32_t result, uint32_t dest, size_t data_size);
 void set_OF_sub(uint32_t result, uint32_t src, uint32_t dest, size_t data_size);
-
 // sbb
 void set_CF_sbb(uint32_t result, uint32_t dest, bool cf, size_t data_size);
 void set_OF_sbb(uint32_t result, uint32_t src, uint32_t dest, size_t data_size);
+// shl
+void set_CF_shl(uint32_t dest, uint32_t src, size_t data_size);
+// shr
+void set_CF_shr(uint32_t dest, uint32_t src, size_t data_size);
+// sar
+void set_CF_sar(uint32_t dest, uint32_t src, size_t data_size);
+// mul
+void set_eflags_mul(uint64_t res, size_t data_size);
 
 // sign extend
 #define sign(x) ((uint32_t)(x) >> 31)
