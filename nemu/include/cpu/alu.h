@@ -46,6 +46,18 @@ void set_SF(uint32_t result, size_t data_size);
 void set_CF_add(uint32_t result, uint32_t dest, size_t data_size);
 void set_OF_add(uint32_t result, uint32_t src, uint32_t dest, size_t data_size);
 
+// adc
+void set_CF_adc(uint32_t result, uint32_t dest, bool cf, size_t data_size);
+void set_OF_adc(uint32_t result, uint32_t src, uint32_t dest, size_t data_size);
+
+// sub
+void set_CF_sub(uint32_t result, uint32_t dest, size_t data_size);
+void set_OF_sub(uint32_t result, uint32_t src, uint32_t dest, size_t data_size);
+
+// sbb
+void set_CF_sbb(uint32_t result, uint32_t dest, bool cf, size_t data_size);
+void set_OF_sbb(uint32_t result, uint32_t src, uint32_t dest, size_t data_size);
+
 // sign extend
 #define sign(x) ((uint32_t)(x) >> 31)
 //#define sign_ext(x) ((int32_t)((int8_t)(x)))

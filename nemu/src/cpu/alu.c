@@ -19,36 +19,62 @@ uint32_t alu_add(uint32_t src, uint32_t dest, size_t data_size) {
 #endif
 }
 
+// return dest + src + cf, intercept data_size bits, set higher bits to 0
 uint32_t alu_adc(uint32_t src, uint32_t dest, size_t data_size) {
 #ifdef NEMU_REF_ALU
     return __ref_alu_adc(src, dest, data_size);
 #else
-    printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-    fflush(stdout);
-    assert(0);
-    return 0;
+    uint32_t res = 0;
+    bool cf = cpu.eflags.CF;
+    res = dest + src + cf;
+
+    set_CF_adc(res, dest, cf, data_size);
+    set_PF(res);
+    // set_AF();
+    set_ZF(res, data_size);
+    set_SF(res, data_size);
+    set_OF_adc(res, src, dest, data_size);
+
+    return res & (0xffffffff >> (32 - data_size));
 #endif
 }
 
+// return dest - src, intercept data_size bits, set higher bits to 0
 uint32_t alu_sub(uint32_t src, uint32_t dest, size_t data_size) {
 #ifdef NEMU_REF_ALU
     return __ref_alu_sub(src, dest, data_size);
 #else
-    printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-    fflush(stdout);
-    assert(0);
-    return 0;
+    uint32_t res = 0;
+    res = dest - src;
+
+    set_CF_sub(res, dest, data_size);
+    set_PF(res);
+    // set_AF();
+    set_ZF(res, data_size);
+    set_SF(res, data_size);
+    set_OF_sub(res, src, dest, data_size);
+
+    return res & (0xffffffff >> (32 - data_size));
 #endif
 }
 
+// return dest - src - cf
 uint32_t alu_sbb(uint32_t src, uint32_t dest, size_t data_size) {
 #ifdef NEMU_REF_ALU
     return __ref_alu_sbb(src, dest, data_size);
 #else
-    printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-    fflush(stdout);
-    assert(0);
-    return 0;
+    uint32_t res = 0;
+    bool cf = cpu.eflags.CF;
+    res = dest - src - cf;
+
+    set_CF_sbb(res, dest, cf, data_size);
+    set_PF(res);
+    // set_AF();
+    set_ZF(res, data_size);
+    set_SF(res, data_size);
+    set_OF_sbb(res, src, dest, data_size);
+
+    return res & (0xffffffff >> (32 - data_size));
 #endif
 }
 
@@ -244,3 +270,52 @@ void set_OF_add(uint32_t result, uint32_t src, uint32_t dest, size_t data_size) 
     }
 }
 
+//--------------adc----------------
+
+// set CF: set on high-order bit carry
+void set_CF_adc(uint32_t result, uint32_t dest, bool cf, size_t data_size) {
+    result = sign_ext(result & (0xffffffff >> (32 - data_size)), data_size);
+    dest = sign_ext(dest & (0xffffffff >> (32 - data_size)), data_size);
+    // cannot use: result < dest + cf (there might be an overflow_error)
+    cpu.eflags.CF = cf ? (result <= dest) : (result < dest);
+}
+
+// set OF: signed numbers, so we don't care if there is a cf
+void set_OF_adc(uint32_t result, uint32_t src, uint32_t dest, size_t data_size) {
+    set_OF_add(result, src, dest, data_size);
+}
+
+//--------------sub----------------
+
+// set CF: set on high-order bit borrow
+void set_CF_sub(uint32_t result, uint32_t dest, size_t data_size) {
+    result = sign_ext(result & (0xffffffff >> (32 - data_size)), data_size);
+    dest = sign_ext(dest & (0xffffffff >> (32 - data_size)), data_size);
+    cpu.eflags.CF = (result > dest);
+}
+
+// set OF: set if too small a negative number (excluding sign-bit)
+void set_OF_sub(uint32_t result, uint32_t src, uint32_t dest, size_t data_size) {
+    result = sign_ext(result & (0xffffffff >> (32 - data_size)), data_size);
+    src = sign_ext(src & (0xffffffff >> (32 - data_size)), data_size);
+    dest = sign_ext(dest & (0xffffffff >> (32 - data_size)), data_size);
+    if (sign(src) != sign(dest)) {
+        cpu.eflags.OF = sign(src) == sign(result);
+    } else {
+        cpu.eflags.OF = 0;
+    }
+}
+
+//--------------sbb----------------
+
+// set CF: set on high-order bit borrow
+void set_CF_sbb(uint32_t result, uint32_t dest, bool cf, size_t data_size) {
+    result = sign_ext(result & (0xffffffff >> (32 - data_size)), data_size);
+    dest = sign_ext(dest & (0xffffffff >> (32 - data_size)), data_size);
+    cpu.eflags.CF = cf ? (result >= dest) : (result > dest); // sub^Cout
+}
+
+// set OF
+void set_OF_sbb(uint32_t result, uint32_t src, uint32_t dest, size_t data_size) {
+    set_OF_sub(result, src, dest, data_size);
+}
