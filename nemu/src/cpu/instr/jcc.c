@@ -1,9 +1,8 @@
 #include "cpu/instr.h"
 
-static void instr_execute_1op_cc_pass()
-{
-	operand_read(&opr_src);
-	cpu.eip += sign_ext(opr_src.val, opr_src.data_size);
+static void instr_execute_1op_cc_pass() {
+    operand_read(&opr_src);
+    cpu.eip += sign_ext(opr_src.val, opr_src.data_size);
 }
 
 static void instr_execute_1op_cc_fail() {/* Do nothing */}

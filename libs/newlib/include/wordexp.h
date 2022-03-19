@@ -13,11 +13,10 @@
 extern "C" {
 #endif
 
-struct _wordexp_t
-{
-  size_t we_wordc; /* Count of words matched by words. */
-  char **we_wordv; /* Pointer to list of expanded words. */
-  size_t we_offs;  /* Slots to reserve at the beginning of we_wordv. */
+struct _wordexp_t {
+    size_t we_wordc; /* Count of words matched by words. */
+    char **we_wordv; /* Pointer to list of expanded words. */
+    size_t we_offs;  /* Slots to reserve at the beginning of we_wordv. */
 };
 
 typedef struct _wordexp_t wordexp_t;
@@ -30,15 +29,14 @@ typedef struct _wordexp_t wordexp_t;
 #define WRDE_SHOWERR 0x0010 /* Print error messages to stderr. */
 #define WRDE_UNDEF 0x0020   /* Report attempt to expand undefined shell variable. */
 
-enum
-{
-  WRDE_SUCCESS,
-  WRDE_NOSPACE,
-  WRDE_BADCHAR,
-  WRDE_BADVAL,
-  WRDE_CMDSUB,
-  WRDE_SYNTAX,
-  WRDE_NOSYS
+enum {
+    WRDE_SUCCESS,
+    WRDE_NOSPACE,
+    WRDE_BADCHAR,
+    WRDE_BADVAL,
+    WRDE_CMDSUB,
+    WRDE_SYNTAX,
+    WRDE_NOSYS
 };
 
 /* Note: This implementation of wordexp requires a version of bash

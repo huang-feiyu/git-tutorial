@@ -27,8 +27,8 @@ extern "C" {
 #endif
 
 WORD
-    PAL_MagicSelectionMenuUpdate(
-        VOID);
+PAL_MagicSelectionMenuUpdate(
+    VOID);
 
 VOID PAL_MagicSelectionMenuInit(
     WORD wPlayerRole,

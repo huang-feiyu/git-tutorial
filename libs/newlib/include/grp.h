@@ -52,12 +52,11 @@
 #define _PATH_GROUP "/etc/group"
 #endif
 
-struct group
-{
-	char *gr_name;   /* group name */
-	char *gr_passwd; /* group password */
-	gid_t gr_gid;	/* group id */
-	char **gr_mem;   /* group members */
+struct group {
+    char *gr_name;   /* group name */
+    char *gr_passwd; /* group password */
+    gid_t gr_gid;	/* group id */
+    char **gr_mem;   /* group members */
 };
 
 #ifdef __cplusplus
@@ -68,9 +67,9 @@ extern "C" {
 struct group *getgrgid(gid_t);
 struct group *getgrnam(const char *);
 int getgrnam_r(const char *, struct group *,
-			   char *, size_t, struct group **);
+               char *, size_t, struct group **);
 int getgrgid_r(gid_t, struct group *,
-			   char *, size_t, struct group **);
+               char *, size_t, struct group **);
 #ifndef _POSIX_SOURCE
 struct group *getgrent(void);
 void setgrent(void);

@@ -23,21 +23,21 @@
 #define _TEXT_H
 
 typedef enum tagDIALOGPOSITION {
-   kDialogUpper = 0,
-   kDialogCenter,
-   kDialogLower,
-   kDialogCenterWindow
+    kDialogUpper = 0,
+    kDialogCenter,
+    kDialogLower,
+    kDialogCenterWindow
 } DIALOGLOCATION;
 
 #define PAL_ADDITIONAL_WORD_FIRST 10000
 
 INT
-    PAL_InitText(
-        VOID);
+PAL_InitText(
+    VOID);
 
 VOID
-    PAL_FreeText(
-        VOID);
+PAL_FreeText(
+    VOID);
 
 LPCSTR
 PAL_GetWord(
@@ -70,15 +70,15 @@ VOID PAL_ClearDialog(
     BOOL fWaitForKey);
 
 VOID
-    PAL_EndDialog(
-        VOID);
+PAL_EndDialog(
+    VOID);
 
 BOOL
-    PAL_IsInDialog(
-        VOID);
+PAL_IsInDialog(
+    VOID);
 
 BOOL
-    PAL_DialogIsPlayingRNG(
-        VOID);
+PAL_DialogIsPlayingRNG(
+    VOID);
 
 #endif

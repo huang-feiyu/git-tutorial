@@ -1,6 +1,6 @@
 /*
  * time.h
- * 
+ *
  * Struct and function declarations for dealing with time.
  */
 
@@ -28,17 +28,16 @@
 
 _BEGIN_STD_C
 
-struct tm
-{
-  int tm_sec;
-  int tm_min;
-  int tm_hour;
-  int tm_mday;
-  int tm_mon;
-  int tm_year;
-  int tm_wday;
-  int tm_yday;
-  int tm_isdst;
+struct tm {
+    int tm_sec;
+    int tm_min;
+    int tm_hour;
+    int tm_mday;
+    int tm_mon;
+    int tm_year;
+    int tm_wday;
+    int tm_yday;
+    int tm_isdst;
 };
 
 clock_t _EXFUN(clock, (void));
@@ -76,22 +75,20 @@ char *_EXFUN(strptime, (const char *__restrict,
 _VOID _EXFUN(tzset, (_VOID));
 _VOID _EXFUN(_tzset_r, (struct _reent *));
 
-typedef struct __tzrule_struct
-{
-  char ch;
-  int m;
-  int n;
-  int d;
-  int s;
-  time_t change;
-  long offset; /* Match type of _timezone. */
+typedef struct __tzrule_struct {
+    char ch;
+    int m;
+    int n;
+    int d;
+    int s;
+    time_t change;
+    long offset; /* Match type of _timezone. */
 } __tzrule_type;
 
-typedef struct __tzinfo_struct
-{
-  int __tznorth;
-  int __tzyear;
-  __tzrule_type __tzrule[2];
+typedef struct __tzinfo_struct {
+    int __tznorth;
+    int __tzyear;
+    __tzrule_type __tzrule[2];
 } __tzinfo_type;
 
 __tzinfo_type *_EXFUN(__gettzinfo, (_VOID));
@@ -213,11 +210,11 @@ extern "C" {
 /* values for the pthread cputime_clock_allowed attribute */
 
 #define CLOCK_ALLOWED 1    /* If a thread is created with this value a */
-                           /*   CPU-time clock attached to that thread */
-                           /*   shall be accessible. */
+/*   CPU-time clock attached to that thread */
+/*   shall be accessible. */
 #define CLOCK_DISALLOWED 0 /* If a thread is created with this value, the */
-                           /*   thread shall not have a CPU-time clock */
-                           /*   accessible. */
+/*   thread shall not have a CPU-time clock */
+/*   accessible. */
 
 /* Manifest Constants, P1003.1b-1993, p. 262 */
 
@@ -253,7 +250,7 @@ extern "C" {
 #if defined(_POSIX_MONOTONIC_CLOCK)
 
 /*  The identifier for the system-wide monotonic clock, which is defined
- *      as a clock whose value cannot be set via clock_settime() and which 
+ *      as a clock whose value cannot be set via clock_settime() and which
  *          cannot have backward clock jumps. */
 
 #define CLOCK_MONOTONIC (clockid_t)4

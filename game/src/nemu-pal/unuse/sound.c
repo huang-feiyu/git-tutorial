@@ -49,8 +49,8 @@ int g_iCurrChannel = 0;
 #endif
 
 INT
-    SOUND_OpenAudio(
-        VOID)
+SOUND_OpenAudio(
+    VOID)
 /*++
   Purpose:
 
@@ -66,12 +66,12 @@ INT
 
 --*/
 {
-  return 0;
+    return 0;
 }
 
 VOID
-    SOUND_CloseAudio(
-        VOID)
+SOUND_CloseAudio(
+    VOID)
 /*++
   Purpose:
 
@@ -87,7 +87,7 @@ VOID
 
 --*/
 {
-  return;
+    return;
 }
 
 VOID SOUND_PlayChannel(
@@ -110,15 +110,14 @@ VOID SOUND_PlayChannel(
 
 --*/
 {
-  return;
+    return;
 }
 
 VOID PAL_PlayMUS(
     INT iNumRIX,
     BOOL fLoop,
-    float flFadeTime)
-{
-  return;
+    float flFadeTime) {
+    return;
 }
 
 BOOL SOUND_PlayCDA(
@@ -138,5 +137,5 @@ BOOL SOUND_PlayCDA(
 
 --*/
 {
-  return FALSE;
+    return FALSE;
 }

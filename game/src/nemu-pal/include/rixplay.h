@@ -37,8 +37,8 @@ INT RIX_Init(
     LPCSTR szFileName);
 
 VOID
-    RIX_Shutdown(
-        VOID);
+RIX_Shutdown(
+    VOID);
 
 VOID RIX_Play(
     INT iNumRIX,

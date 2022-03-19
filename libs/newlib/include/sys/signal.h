@@ -25,32 +25,31 @@ typedef unsigned long sigset_t;
    NOTE: P1003.1c/D10, p. 34 adds SIGEV_THREAD.  */
 
 #define SIGEV_NONE 1   /* No asynchronous notification shall be delivered */
-                       /*   when the event of interest occurs. */
+/*   when the event of interest occurs. */
 #define SIGEV_SIGNAL 2 /* A queued signal, with an application defined */
-                       /*  value, shall be delivered when the event of */
-                       /*  interest occurs. */
+/*  value, shall be delivered when the event of */
+/*  interest occurs. */
 #define SIGEV_THREAD 3 /* A notification function shall be called to */
-                       /*   perform notification. */
+/*   perform notification. */
 
 /*  Signal Generation and Delivery, P1003.1b-1993, p. 63
     NOTE: P1003.1c/D10, p. 34 adds sigev_notify_function and
           sigev_notify_attributes to the sigevent structure.  */
 
 union sigval {
-  int sival_int;   /* Integer signal value */
-  void *sival_ptr; /* Pointer signal value */
+    int sival_int;   /* Integer signal value */
+    void *sival_ptr; /* Pointer signal value */
 };
 
-struct sigevent
-{
-  int sigev_notify;         /* Notification type */
-  int sigev_signo;          /* Signal number */
-  union sigval sigev_value; /* Signal value */
+struct sigevent {
+    int sigev_notify;         /* Notification type */
+    int sigev_signo;          /* Signal number */
+    union sigval sigev_value; /* Signal value */
 
 #if defined(_POSIX_THREADS)
-  void (*sigev_notify_function)(union sigval);
-  /* Notification function */
-  pthread_attr_t *sigev_notify_attributes; /* Notification Attributes */
+    void (*sigev_notify_function)(union sigval);
+    /* Notification function */
+    pthread_attr_t *sigev_notify_attributes; /* Notification Attributes */
 #endif
 };
 
@@ -63,11 +62,10 @@ struct sigevent
 #define SI_ASYNCIO 4 /* Indicates completion of asycnhronous IO */
 #define SI_MESGQ 5   /* Indicates arrival of a message at an empty queue */
 
-typedef struct
-{
-  int si_signo;          /* Signal number */
-  int si_code;           /* Cause of the signal */
-  union sigval si_value; /* Signal value */
+typedef struct {
+    int si_signo;          /* Signal number */
+    int si_code;           /* Cause of the signal */
+    union sigval si_value; /* Signal value */
 } siginfo_t;
 #endif
 
@@ -75,7 +73,7 @@ typedef struct
 
 #define SA_NOCLDSTOP 1 /* Do not generate SIGCHLD when children stop */
 #define SA_SIGINFO 2   /* Invoke the signal catching function with */
-                       /*   three arguments instead of one. */
+/*   three arguments instead of one. */
 
 /* struct sigaction notes from POSIX:
  *
@@ -88,18 +86,17 @@ typedef struct
 
 typedef void (*_sig_func_ptr)(int);
 
-struct sigaction
-{
-  int sa_flags;     /* Special flags to affect behavior of signal */
-  sigset_t sa_mask; /* Additional set of signals to be blocked */
-                    /*   during execution of signal-catching */
-                    /*   function. */
-  union {
-    _sig_func_ptr _handler; /* SIG_DFL, SIG_IGN, or pointer to a function */
+struct sigaction {
+    int sa_flags;     /* Special flags to affect behavior of signal */
+    sigset_t sa_mask; /* Additional set of signals to be blocked */
+    /*   during execution of signal-catching */
+    /*   function. */
+    union {
+        _sig_func_ptr _handler; /* SIG_DFL, SIG_IGN, or pointer to a function */
 #if defined(_POSIX_REALTIME_SIGNALS)
-    void (*_sigaction)(int, siginfo_t *, void *);
+        void (*_sigaction)(int, siginfo_t *, void *);
 #endif
-  } _signal_handlers;
+    } _signal_handlers;
 };
 
 #define sa_handler _signal_handlers._handler
@@ -114,11 +111,10 @@ struct sigaction
 
 typedef void (*_sig_func_ptr)(int);
 
-struct sigaction
-{
-  _sig_func_ptr sa_handler;
-  sigset_t sa_mask;
-  int sa_flags;
+struct sigaction {
+    _sig_func_ptr sa_handler;
+    sigset_t sa_mask;
+    int sa_flags;
 };
 #endif                 /* defined(__rtems__) */
 
@@ -126,7 +122,7 @@ struct sigaction
 #define SIG_BLOCK 1   /* set of signals to block */
 #define SIG_UNBLOCK 2 /* set of signals to, well, unblock */
 
-/* These depend upon the type of sigset_t, which right now 
+/* These depend upon the type of sigset_t, which right now
    is always a long.. They're in the POSIX namespace, but
    are not ANSI. */
 #define sigaddset(what, sig) (*(what) |= (1 << (sig)), 0)

@@ -121,26 +121,23 @@ extern "C" {
 
 #define BATTLE_LABEL_ESCAPEFAIL 31
 
-typedef struct tagBOX
-{
-   PAL_POS pos;
-   WORD wWidth, wHeight;
-   SDL_Surface *lpSavedArea;
+typedef struct tagBOX {
+    PAL_POS pos;
+    WORD wWidth, wHeight;
+    SDL_Surface *lpSavedArea;
 } BOX, *LPBOX;
 
-typedef struct tagMENUITEM
-{
-   WORD wValue;
-   WORD wNumWord;
-   BOOL fEnabled;
-   PAL_POS pos;
+typedef struct tagMENUITEM {
+    WORD wValue;
+    WORD wNumWord;
+    BOOL fEnabled;
+    PAL_POS pos;
 } MENUITEM, *LPMENUITEM;
 
-typedef struct tagOBJECTDESC
-{
-   WORD wObjectID;
-   LPSTR lpDesc;
-   struct tagOBJECTDESC *next;
+typedef struct tagOBJECTDESC {
+    WORD wObjectID;
+    LPSTR lpDesc;
+    struct tagOBJECTDESC *next;
 } OBJECTDESC, *LPOBJECTDESC;
 
 typedef VOID (*LPITEMCHANGED_CALLBACK)(WORD);
@@ -148,24 +145,24 @@ typedef VOID (*LPITEMCHANGED_CALLBACK)(WORD);
 #define MENUITEM_VALUE_CANCELLED 0xFFFF
 
 typedef enum tagNUMCOLOR {
-   kNumColorYellow,
-   kNumColorBlue,
-   kNumColorCyan
+    kNumColorYellow,
+    kNumColorBlue,
+    kNumColorCyan
 } NUMCOLOR;
 
 typedef enum tagNUMALIGN {
-   kNumAlignLeft,
-   kNumAlignMid,
-   kNumAlignRight
+    kNumAlignLeft,
+    kNumAlignMid,
+    kNumAlignRight
 } NUMALIGN;
 
 INT
-    PAL_InitUI(
-        VOID);
+PAL_InitUI(
+    VOID);
 
 VOID
-    PAL_FreeUI(
-        VOID);
+PAL_FreeUI(
+    VOID);
 
 LPBOX
 PAL_CreateBox(

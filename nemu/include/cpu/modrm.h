@@ -4,13 +4,12 @@
 #include "cpu/operand.h"
 
 typedef union {
-	struct
-	{
-		uint32_t rm : 3;
-		uint32_t reg_opcode : 3;
-		uint32_t mod : 2;
-	};
-	uint8_t val;
+    struct {
+        uint32_t rm : 3;
+        uint32_t reg_opcode : 3;
+        uint32_t mod : 2;
+    };
+    uint8_t val;
 } MODRM;
 
 // The following functions parses the ModR/M byte and the possible following SIB and displacement bytes.

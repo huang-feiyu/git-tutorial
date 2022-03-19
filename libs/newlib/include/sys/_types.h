@@ -37,7 +37,7 @@ __extension__ typedef long long _off64_t;
  */
 #ifndef __fpos_t_defined
 typedef long _fpos_t; /* XXX must match off_t in <sys/types.h> */
-                      /* (and must be `long' for now) */
+/* (and must be `long' for now) */
 #endif
 
 #ifdef __LARGE64_FILES
@@ -68,13 +68,12 @@ typedef long _ssize_t;
 
 #ifndef __mbstate_t_defined
 /* Conversion state information.  */
-typedef struct
-{
-  int __count;
-  union {
-    wint_t __wch;
-    unsigned char __wchb[4];
-  } __value; /* Value so far.  */
+typedef struct {
+    int __count;
+    union {
+        wint_t __wch;
+        unsigned char __wchb[4];
+    } __value; /* Value so far.  */
 } _mbstate_t;
 #endif
 

@@ -30,16 +30,16 @@ VOID PAL_GameUpdate(
     BOOL fTrigger);
 
 VOID
-    PAL_GameUseItem(
-        VOID);
+PAL_GameUseItem(
+    VOID);
 
 VOID
-    PAL_GameEquipItem(
-        VOID);
+PAL_GameEquipItem(
+    VOID);
 
 VOID
-    PAL_StartFrame(
-        VOID);
+PAL_StartFrame(
+    VOID);
 
 VOID PAL_WaitForKey(
     WORD wTimeOut);

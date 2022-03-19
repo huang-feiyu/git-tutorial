@@ -43,14 +43,13 @@ VOID MIDI_Play(
 
 --*/
 {
-  return;
+    return;
 }
 
 VOID
-    MIDI_CheckLoop(
-        VOID)
-{
-  return;
+MIDI_CheckLoop(
+    VOID) {
+    return;
 }
 
 #endif

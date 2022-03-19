@@ -47,25 +47,24 @@ extern "C" {
 #define _PASSWORD_LEN 128 /* max length, not counting NULL */
 #endif
 
-struct passwd
-{
-	char *pw_name;	/* user name */
-	char *pw_passwd;  /* encrypted password */
-	uid_t pw_uid;	 /* user uid */
-	gid_t pw_gid;	 /* user gid */
-	char *pw_comment; /* comment */
-	char *pw_gecos;   /* Honeywell login info */
-	char *pw_dir;	 /* home directory */
-	char *pw_shell;   /* default shell */
+struct passwd {
+    char *pw_name;	/* user name */
+    char *pw_passwd;  /* encrypted password */
+    uid_t pw_uid;	 /* user uid */
+    gid_t pw_gid;	 /* user gid */
+    char *pw_comment; /* comment */
+    char *pw_gecos;   /* Honeywell login info */
+    char *pw_dir;	 /* home directory */
+    char *pw_shell;   /* default shell */
 };
 
 #ifndef __INSIDE_CYGWIN__
 struct passwd *getpwuid(uid_t);
 struct passwd *getpwnam(const char *);
 int getpwnam_r(const char *, struct passwd *,
-			   char *, size_t, struct passwd **);
+               char *, size_t, struct passwd **);
 int getpwuid_r(uid_t, struct passwd *, char *,
-			   size_t, struct passwd **);
+               size_t, struct passwd **);
 #ifndef _POSIX_SOURCE
 struct passwd *getpwent(void);
 void setpwent(void);

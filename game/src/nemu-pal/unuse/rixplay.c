@@ -21,7 +21,7 @@ VOID RIX_FillBuffer(
 
 --*/
 {
-  return;
+    return;
 }
 
 INT RIX_Init(
@@ -41,12 +41,12 @@ INT RIX_Init(
 
 --*/
 {
-  return 0;
+    return 0;
 }
 
 VOID
-    RIX_Shutdown(
-        VOID)
+RIX_Shutdown(
+    VOID)
 /*++
   Purpose:
 
@@ -62,7 +62,7 @@ VOID
 
 --*/
 {
-  return;
+    return;
 }
 
 VOID RIX_Play(
@@ -88,5 +88,5 @@ VOID RIX_Play(
 
 --*/
 {
-  return;
+    return;
 }

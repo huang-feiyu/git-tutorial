@@ -12,19 +12,19 @@ _BEGIN_STD_C
  * in case any code used them.  They are no longer used by Newlib, itself,
  * other than legacy.  */
 union __dmath {
-  double d;
-  __ULong i[2];
+    double d;
+    __ULong i[2];
 };
 
 union __fmath {
-  float f;
-  __ULong i[1];
+    float f;
+    __ULong i[1];
 };
 
 #if defined(_HAVE_LONG_DOUBLE)
 union __ldmath {
-  long double ld;
-  __ULong i[4];
+    long double ld;
+    __ULong i[4];
 };
 #endif
 
@@ -91,8 +91,8 @@ union __ldmath {
      * warning, but causes errors for plain gcc, so is only used in the one
      * special case.  */
 static const union {
-  __ULong __i[1];
-  float __d;
+    __ULong __i[1];
+    float __d;
 } __Nanf = {0x7FC00000};
 #define NAN (__Nanf.__d)
 #else
@@ -517,12 +517,12 @@ struct __exception
 struct exception
 #endif
 {
-  int type;
-  char *name;
-  double arg1;
-  double arg2;
-  double retval;
-  int err;
+    int type;
+    char *name;
+    double arg1;
+    double arg2;
+    double retval;
+    int err;
 };
 
 #ifdef __cplusplus
@@ -569,12 +569,11 @@ extern int matherr _PARAMS((struct exception * e));
 
 /* Global control over fdlibm error handling.  */
 
-enum __fdlibm_version
-{
-  __fdlibm_ieee = -1,
-  __fdlibm_svid,
-  __fdlibm_xopen,
-  __fdlibm_posix
+enum __fdlibm_version {
+    __fdlibm_ieee = -1,
+    __fdlibm_svid,
+    __fdlibm_xopen,
+    __fdlibm_posix
 };
 
 #define _LIB_VERSION_TYPE enum __fdlibm_version

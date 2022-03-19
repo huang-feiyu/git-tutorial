@@ -87,12 +87,12 @@ VOID UTIL_CloseFile(
 #ifdef ENABLE_LOG
 
 FILE *
-    UTIL_OpenLog(
-        VOID);
+UTIL_OpenLog(
+    VOID);
 
 VOID
-    UTIL_CloseLog(
-        VOID);
+UTIL_CloseLog(
+    VOID);
 
 VOID UTIL_WriteLog(
     int Priority,
@@ -104,8 +104,7 @@ VOID UTIL_WriteLog(
 #define UTIL_OpenLog() ((void)(0))
 #define UTIL_CloseLog() ((void)(0))
 #ifdef _MSC_VER
-__forceinline VOID UTIL_WriteLog(int i, const char *p, ...)
-{
+__forceinline VOID UTIL_WriteLog(int i, const char *p, ...) {
 }
 #else
 #define UTIL_WriteLog(...) ((void)(0))

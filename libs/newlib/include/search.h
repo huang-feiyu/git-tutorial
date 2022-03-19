@@ -13,36 +13,33 @@
 #include <machine/ansi.h>
 #include <sys/types.h>
 
-typedef struct entry
-{
-	char *key;
-	void *data;
+typedef struct entry {
+    char *key;
+    void *data;
 } ENTRY;
 
 typedef enum {
-	FIND,
-	ENTER
+    FIND,
+    ENTER
 } ACTION;
 
 typedef enum {
-	preorder,
-	postorder,
-	endorder,
-	leaf
+    preorder,
+    postorder,
+    endorder,
+    leaf
 } VISIT;
 
 #ifdef _SEARCH_PRIVATE
-typedef struct node
-{
-	char *key;
-	struct node *llink, *rlink;
+typedef struct node {
+    char *key;
+    struct node *llink, *rlink;
 } node_t;
 #endif
 
-struct hsearch_data
-{
-	struct internal_head *htable;
-	size_t htablesize;
+struct hsearch_data {
+    struct internal_head *htable;
+    size_t htablesize;
 };
 
 #ifndef __compar_fn_t_defined

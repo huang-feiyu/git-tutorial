@@ -35,8 +35,8 @@ VOID MIDI_Play(
     BOOL fLoop);
 
 VOID
-    MIDI_CheckLoop(
-        VOID);
+MIDI_CheckLoop(
+    VOID);
 
 #ifdef __cplusplus
 }

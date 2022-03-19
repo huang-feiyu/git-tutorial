@@ -60,11 +60,10 @@ extern "C" {
 //  d & 0x2000
 //
 
-typedef struct tagPALMAP
-{
-   DWORD Tiles[128][64][2];
-   LPSPRITE pTileSprite;
-   INT iMapNum;
+typedef struct tagPALMAP {
+    DWORD Tiles[128][64][2];
+    LPSPRITE pTileSprite;
+    INT iMapNum;
 } PALMAP, *LPPALMAP;
 
 typedef const PALMAP *LPCPALMAP;

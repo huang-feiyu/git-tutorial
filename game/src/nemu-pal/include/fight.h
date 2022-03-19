@@ -27,14 +27,14 @@ extern "C" {
 #endif
 
 INT
-    PAL_BattleSelectAutoTarget(
-        VOID);
+PAL_BattleSelectAutoTarget(
+    VOID);
 
 #ifndef PAL_CLASSIC
 
 VOID
-    PAL_UpdateTimeChargingUnit(
-        VOID);
+PAL_UpdateTimeChargingUnit(
+    VOID);
 
 float PAL_GetTimeChargingSpeed(
     WORD wDexterity);
@@ -42,16 +42,16 @@ float PAL_GetTimeChargingSpeed(
 #endif
 
 VOID
-    PAL_BattleUpdateFighters(
-        VOID);
+PAL_BattleUpdateFighters(
+    VOID);
 
 VOID
-    PAL_BattlePlayerCheckReady(
-        VOID);
+PAL_BattlePlayerCheckReady(
+    VOID);
 
 VOID
-    PAL_BattleStartFrame(
-        VOID);
+PAL_BattleStartFrame(
+    VOID);
 
 VOID PAL_BattleCommitAction(
     BOOL fRepeat);

@@ -38,13 +38,13 @@ typedef DWORD PAL_POS;
 #define PAL_Y(xy) (SHORT)(((xy) >> 16) & 0xFFFF)
 
 typedef enum tagPALDIRECTION {
-   kDirSouth = 0,
-   kDirWest,
-   kDirNorth,
-   kDirEast,
-   kDirUnknown
+    kDirSouth = 0,
+    kDirWest,
+    kDirNorth,
+    kDirEast,
+    kDirUnknown
 } PALDIRECTION,
-    *LPPALDIRECTION;
+*LPPALDIRECTION;
 
 INT PAL_RLEBlitToSurface(
     LPCBITMAPRLE lpBitmapRLE,

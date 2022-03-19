@@ -39,13 +39,13 @@ VOID PAL_ScrollFBP(
     BOOL fScrollDown);
 
 VOID
-    PAL_EndingAnimation(
-        VOID);
+PAL_EndingAnimation(
+    VOID);
 
 #ifdef PAL_WIN95
 VOID
-    PAL_EndingScreen(
-        VOID);
+PAL_EndingScreen(
+    VOID);
 #endif
 
 #ifdef __cplusplus

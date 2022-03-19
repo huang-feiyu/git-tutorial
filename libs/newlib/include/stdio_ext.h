@@ -26,28 +26,39 @@ void _EXFUN(__fpurge, (FILE *));
 #ifdef __GNUC__
 
 _ELIDABLE_INLINE inline size_t
-__fbufsize(FILE *__fp)
-{
+__fbufsize(FILE *__fp) {
     return (size_t)__fp->_bf._size;
 }
 
 _ELIDABLE_INLINE inline int
-__freading(FILE *__fp) { return (__fp->_flags & __SRD) != 0; }
+__freading(FILE *__fp) {
+    return (__fp->_flags & __SRD) != 0;
+}
 
 _ELIDABLE_INLINE inline int
-__fwriting(FILE *__fp) { return (__fp->_flags & __SWR) != 0; }
+__fwriting(FILE *__fp) {
+    return (__fp->_flags & __SWR) != 0;
+}
 
 _ELIDABLE_INLINE inline int
-__freadable(FILE *__fp) { return (__fp->_flags & (__SRD | __SRW)) != 0; }
+__freadable(FILE *__fp) {
+    return (__fp->_flags & (__SRD | __SRW)) != 0;
+}
 
 _ELIDABLE_INLINE inline int
-__fwriteable(FILE *__fp) { return (__fp->_flags & (__SWR | __SRW)) != 0; }
+__fwriteable(FILE *__fp) {
+    return (__fp->_flags & (__SWR | __SRW)) != 0;
+}
 
 _ELIDABLE_INLINE inline int
-__flbf(FILE *__fp) { return (__fp->_flags & __SLBF) != 0; }
+__flbf(FILE *__fp) {
+    return (__fp->_flags & __SLBF) != 0;
+}
 
 _ELIDABLE_INLINE inline size_t
-__fpending(FILE *__fp) { return __fp->_p - __fp->_bf._base; }
+__fpending(FILE *__fp) {
+    return __fp->_p - __fp->_bf._base;
+}
 
 #else
 

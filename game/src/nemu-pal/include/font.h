@@ -30,12 +30,12 @@ extern "C" {
 #endif
 
 INT
-    PAL_InitFont(
-        VOID);
+PAL_InitFont(
+    VOID);
 
 VOID
-    PAL_FreeFont(
-        VOID);
+PAL_FreeFont(
+    VOID);
 
 VOID PAL_DrawCharOnSurface(
     WORD wChar,

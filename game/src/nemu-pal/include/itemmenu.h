@@ -27,8 +27,8 @@ extern "C" {
 #endif
 
 WORD
-    PAL_ItemSelectMenuUpdate(
-        VOID);
+PAL_ItemSelectMenuUpdate(
+    VOID);
 
 VOID PAL_ItemSelectMenuInit(
     WORD wItemFlags);

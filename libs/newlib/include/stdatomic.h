@@ -126,12 +126,12 @@
  */
 
 typedef enum {
-	memory_order_relaxed = __ATOMIC_RELAXED,
-	memory_order_consume = __ATOMIC_CONSUME,
-	memory_order_acquire = __ATOMIC_ACQUIRE,
-	memory_order_release = __ATOMIC_RELEASE,
-	memory_order_acq_rel = __ATOMIC_ACQ_REL,
-	memory_order_seq_cst = __ATOMIC_SEQ_CST
+    memory_order_relaxed = __ATOMIC_RELAXED,
+    memory_order_consume = __ATOMIC_CONSUME,
+    memory_order_acquire = __ATOMIC_ACQUIRE,
+    memory_order_release = __ATOMIC_RELEASE,
+    memory_order_acq_rel = __ATOMIC_ACQ_REL,
+    memory_order_seq_cst = __ATOMIC_SEQ_CST
 } memory_order;
 
 /*
@@ -139,29 +139,27 @@ typedef enum {
  */
 
 static __inline void
-atomic_thread_fence(memory_order __order __unused)
-{
+atomic_thread_fence(memory_order __order __unused) {
 
 #ifdef __CLANG_ATOMICS
-	__c11_atomic_thread_fence(__order);
+    __c11_atomic_thread_fence(__order);
 #elif defined(__GNUC_ATOMICS)
-	__atomic_thread_fence(__order);
+    __atomic_thread_fence(__order);
 #else
-	__sync_synchronize();
+    __sync_synchronize();
 #endif
 }
 
 static __inline void
-atomic_signal_fence(memory_order __order __unused)
-{
+atomic_signal_fence(memory_order __order __unused) {
 
 #ifdef __CLANG_ATOMICS
-	__c11_atomic_signal_fence(__order);
+    __c11_atomic_signal_fence(__order);
 #elif defined(__GNUC_ATOMICS)
-	__atomic_signal_fence(__order);
+    __atomic_signal_fence(__order);
 #else
-	__asm volatile("" ::
-					   : "memory");
+    __asm volatile("" ::
+                   : "memory");
 #endif
 }
 
@@ -378,9 +376,8 @@ typedef _Atomic(uintmax_t) atomic_uintmax_t;
  * kind of compiler built-in type we could use?
  */
 
-typedef struct
-{
-	atomic_bool __flag;
+typedef struct {
+    atomic_bool __flag;
 } atomic_flag;
 
 #define ATOMIC_FLAG_INIT   \
@@ -390,32 +387,28 @@ typedef struct
 
 static __inline _Bool
 atomic_flag_test_and_set_explicit(volatile atomic_flag *__object,
-								  memory_order __order)
-{
-	return (atomic_exchange_explicit(&__object->__flag, 1, __order));
+                                  memory_order __order) {
+    return (atomic_exchange_explicit(&__object->__flag, 1, __order));
 }
 
 static __inline void
-atomic_flag_clear_explicit(volatile atomic_flag *__object, memory_order __order)
-{
+atomic_flag_clear_explicit(volatile atomic_flag *__object, memory_order __order) {
 
-	atomic_store_explicit(&__object->__flag, 0, __order);
+    atomic_store_explicit(&__object->__flag, 0, __order);
 }
 
 #ifndef _KERNEL
 static __inline _Bool
-atomic_flag_test_and_set(volatile atomic_flag *__object)
-{
+atomic_flag_test_and_set(volatile atomic_flag *__object) {
 
-	return (atomic_flag_test_and_set_explicit(__object,
-											  memory_order_seq_cst));
+    return (atomic_flag_test_and_set_explicit(__object,
+            memory_order_seq_cst));
 }
 
 static __inline void
-atomic_flag_clear(volatile atomic_flag *__object)
-{
+atomic_flag_clear(volatile atomic_flag *__object) {
 
-	atomic_flag_clear_explicit(__object, memory_order_seq_cst);
+    atomic_flag_clear_explicit(__object, memory_order_seq_cst);
 }
 #endif /* !_KERNEL */
 

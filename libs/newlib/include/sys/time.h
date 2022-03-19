@@ -14,10 +14,9 @@ extern "C" {
 
 #ifndef _TIMEVAL_DEFINED
 #define _TIMEVAL_DEFINED
-struct timeval
-{
-  time_t tv_sec;
-  suseconds_t tv_usec;
+struct timeval {
+    time_t tv_sec;
+    suseconds_t tv_usec;
 };
 
 /* BSD time macros used by RTEMS code */
@@ -54,10 +53,9 @@ struct timeval
 #endif /* defined (__rtems__) || defined (__CYGWIN__) */
 #endif /* !_TIMEVAL_DEFINED */
 
-struct timezone
-{
-  int tz_minuteswest;
-  int tz_dsttime;
+struct timezone {
+    int tz_minuteswest;
+    int tz_dsttime;
 };
 
 #ifdef __CYGWIN__
@@ -68,10 +66,9 @@ struct timezone
 #define ITIMER_VIRTUAL 1
 #define ITIMER_PROF 2
 
-struct itimerval
-{
-  struct timeval it_interval;
-  struct timeval it_value;
+struct itimerval {
+    struct timeval it_interval;
+    struct timeval it_value;
 };
 
 #ifdef _COMPILING_NEWLIB

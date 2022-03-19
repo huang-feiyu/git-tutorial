@@ -29,34 +29,34 @@ extern "C" {
 #include "ui.h"
 
 VOID
-    PAL_DrawOpeningMenuBackground(
-        VOID);
+PAL_DrawOpeningMenuBackground(
+    VOID);
 
 INT
-    PAL_OpeningMenu(
-        VOID);
+PAL_OpeningMenu(
+    VOID);
 
 INT PAL_SaveSlotMenu(
     WORD wDefaultSlot);
 
 BOOL
-    PAL_ConfirmMenu(
-        VOID);
+PAL_ConfirmMenu(
+    VOID);
 
 BOOL PAL_SwitchMenu(
     BOOL fEnabled);
 
 VOID
-    PAL_InGameMagicMenu(
-        VOID);
+PAL_InGameMagicMenu(
+    VOID);
 
 VOID
-    PAL_InGameMenu(
-        VOID);
+PAL_InGameMenu(
+    VOID);
 
 VOID
-    PAL_PlayerStatus(
-        VOID);
+PAL_PlayerStatus(
+    VOID);
 
 WORD PAL_ItemUseMenu(
     WORD wItemToUse);
@@ -65,8 +65,8 @@ VOID PAL_BuyMenu(
     WORD wStoreNum);
 
 VOID
-    PAL_SellMenu(
-        VOID);
+PAL_SellMenu(
+    VOID);
 
 VOID PAL_EquipItemMenu(
     WORD wItem);

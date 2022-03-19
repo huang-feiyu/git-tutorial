@@ -74,8 +74,8 @@ COPYRIGHT NOTICE AND DISCLAIMER:
 
 Copyright (C) 1997 Gregory Pietsch
 
-This file and the accompanying getopt.c implementation file are hereby 
-placed in the public domain without restrictions.  Just give the author 
+This file and the accompanying getopt.c implementation file are hereby
+placed in the public domain without restrictions.  Just give the author
 credit, don't claim you wrote it or prevent anyone else from using it.
 
 Gregory Pietsch's current e-mail address:
@@ -101,17 +101,16 @@ extern "C" {
 #endif /* __cplusplus */
 
 /* types defined by this include file */
-struct option
-{
-  const char *name; /* the name of the long option */
-  int has_arg;      /* one of the above macros */
-  int *flag;        /* determines if getopt_long() returns a
+struct option {
+    const char *name; /* the name of the long option */
+    int has_arg;      /* one of the above macros */
+    int *flag;        /* determines if getopt_long() returns a
 				 * value for a long option; if it is
 				 * non-NULL, 0 is returned as a function
 				 * value and the value of val is stored in
 				 * the area pointed to by flag.  Otherwise,
 				 * val is returned. */
-  int val;          /* determines the value to return if flag is
+    int val;          /* determines the value to return if flag is
 				 * NULL. */
 };
 
@@ -139,10 +138,9 @@ struct option
 
 /* The getopt_data structure is for reentrancy. Its members are similar to
      the externally-defined variables.  */
-typedef struct getopt_data
-{
-  char *optarg;
-  int optind, opterr, optopt, optwhere;
+typedef struct getopt_data {
+    char *optarg;
+    int optind, opterr, optopt, optwhere;
 } getopt_data;
 
 #endif /* __need_getopt_newlib */

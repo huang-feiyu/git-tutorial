@@ -105,10 +105,10 @@
 #ifdef QUEUE_MACRO_DEBUG
 /* Store the last 2 places the queue element or head was altered */
 struct qm_trace {
-	unsigned long	 lastline;
-	unsigned long	 prevline;
-	const char	*lastfile;
-	const char	*prevfile;
+    unsigned long	 lastline;
+    unsigned long	 prevline;
+    const char	*lastfile;
+    const char	*prevfile;
 };
 
 #define	TRACEBUF	struct qm_trace trace;
@@ -651,32 +651,30 @@ struct {								\
  */
 
 struct quehead {
-	struct quehead *qh_link;
-	struct quehead *qh_rlink;
+    struct quehead *qh_link;
+    struct quehead *qh_rlink;
 };
 
 #ifdef	__GNUC__
 
 static __inline void
-insque(void *a, void *b)
-{
-	struct quehead *element = (struct quehead *)a,
-		 *head = (struct quehead *)b;
+insque(void *a, void *b) {
+    struct quehead *element = (struct quehead *)a,
+                    *head = (struct quehead *)b;
 
-	element->qh_link = head->qh_link;
-	element->qh_rlink = head;
-	head->qh_link = element;
-	element->qh_link->qh_rlink = element;
+    element->qh_link = head->qh_link;
+    element->qh_rlink = head;
+    head->qh_link = element;
+    element->qh_link->qh_rlink = element;
 }
 
 static __inline void
-remque(void *a)
-{
-	struct quehead *element = (struct quehead *)a;
+remque(void *a) {
+    struct quehead *element = (struct quehead *)a;
 
-	element->qh_link->qh_rlink = element->qh_rlink;
-	element->qh_rlink->qh_link = element->qh_link;
-	element->qh_rlink = 0;
+    element->qh_link->qh_rlink = element->qh_rlink;
+    element->qh_rlink->qh_link = element->qh_link;
+    element->qh_rlink = 0;
 }
 
 #else /* !__GNUC__ */

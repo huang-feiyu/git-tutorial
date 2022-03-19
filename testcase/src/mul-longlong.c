@@ -1,9 +1,8 @@
 #include "trap.h"
 
-long long mul(long long a, long long b)
-{
-	long long ans = a * b;
-	return ans;
+long long mul(long long a, long long b) {
+    long long ans = a * b;
+    return ans;
 }
 
 int test_data[] = {-1364082006, 1157693227, -2022600529, 301212728};
@@ -11,21 +10,18 @@ long long ans[] = {1860719719092984036LL, -1579188499418773362LL, 27589929869349
 
 #define NR_DATA (sizeof(test_data) / sizeof(test_data[0]))
 
-int main()
-{
-	int i, j, ans_idx = 0;
-	int loop = 0;
-	for (i = 0; i < NR_DATA; i++)
-	{
-		for (j = i; j < NR_DATA; j++)
-		{
-			//nemu_assert(0);
-			nemu_assert(ans[ans_idx++] == mul(test_data[i], test_data[j]));
-			loop++;
-		}
-	}
+int main() {
+    int i, j, ans_idx = 0;
+    int loop = 0;
+    for (i = 0; i < NR_DATA; i++) {
+        for (j = i; j < NR_DATA; j++) {
+            //nemu_assert(0);
+            nemu_assert(ans[ans_idx++] == mul(test_data[i], test_data[j]));
+            loop++;
+        }
+    }
 
-	nemu_assert(loop == NR_DATA * (NR_DATA + 1) / 2);
-	HIT_GOOD_TRAP;
-	return 0;
+    nemu_assert(loop == NR_DATA * (NR_DATA + 1) / 2);
+    HIT_GOOD_TRAP;
+    return 0;
 }

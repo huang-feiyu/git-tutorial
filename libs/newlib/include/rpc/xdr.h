@@ -80,8 +80,7 @@ extern "C" {
  * XDR_FREE can be used to release the space allocated by an XDR_DECODE
  * request.
  */
-enum xdr_op
-{
+enum xdr_op {
     XDR_ENCODE = 0,
     XDR_DECODE = 1,
     XDR_FREE = 2
@@ -104,11 +103,9 @@ enum xdr_op
  * an operations vector for the particular implementation (e.g. see xdr_mem.c),
  * and two private fields for the use of the particular implementation.
  */
-typedef struct __rpc_xdr
-{
+typedef struct __rpc_xdr {
     enum xdr_op x_op; /* operation; fast additional param */
-    _CONST struct xdr_ops
-    {
+    _CONST struct xdr_ops {
         /* get a long from underlying stream */
         bool_t _EXFNPTR(x_getlong, (struct __rpc_xdr *, long *));
 
@@ -245,8 +242,7 @@ typedef bool_t _EXFNPTR(xdrproc_t, (XDR *, ...));
  * If there is no match and no default routine it is an error.
  */
 #define NULL_xdrproc_t ((xdrproc_t)0)
-struct xdr_discrim
-{
+struct xdr_discrim {
     int value;
     xdrproc_t proc;
 };
@@ -344,8 +340,7 @@ extern u_long _EXFUN(xdr_sizeof, (xdrproc_t, void *));
  * declared here due to commonality.
  */
 #define MAX_NETOBJ_SZ 1024
-struct netobj
-{
+struct netobj {
     u_int n_len;
     char *n_bytes;
 };

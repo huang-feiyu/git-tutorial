@@ -37,12 +37,12 @@ extern "C" {
 #endif
 
 INT
-    SOUND_OpenAudio(
-        VOID);
+SOUND_OpenAudio(
+    VOID);
 
 VOID
-    SOUND_CloseAudio(
-        VOID);
+SOUND_CloseAudio(
+    VOID);
 
 VOID SOUND_PlayChannel(
     INT iSoundNum,

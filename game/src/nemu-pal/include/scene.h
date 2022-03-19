@@ -30,8 +30,8 @@ VOID PAL_ApplyWave(
     SDL_Surface *lpSurface);
 
 VOID
-    PAL_MakeScene(
-        VOID);
+PAL_MakeScene(
+    VOID);
 
 BOOL PAL_CheckObstacle(
     PAL_POS pos,
@@ -42,8 +42,8 @@ VOID PAL_UpdatePartyGestures(
     BOOL fWalking);
 
 VOID
-    PAL_UpdateParty(
-        VOID);
+PAL_UpdateParty(
+    VOID);
 
 VOID PAL_NPCWalkOneStep(
     WORD wEventObjectID,

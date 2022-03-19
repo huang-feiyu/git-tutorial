@@ -61,8 +61,8 @@ VOID PAL_ColorFade(
     BOOL fFrom);
 
 VOID
-    PAL_FadeToRed(
-        VOID);
+PAL_FadeToRed(
+    VOID);
 
 #ifdef __cplusplus
 }

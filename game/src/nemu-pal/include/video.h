@@ -43,8 +43,8 @@ VIDEO_Init(
     BOOL fFullScreen);
 
 VOID
-    VIDEO_Shutdown(
-        VOID);
+VIDEO_Shutdown(
+    VOID);
 
 VOID VIDEO_UpdateScreen(
     const SDL_Rect *lpRect);
@@ -57,24 +57,24 @@ VOID VIDEO_Resize(
     INT h);
 
 SDL_Color *
-    VIDEO_GetPalette(
-        VOID);
+VIDEO_GetPalette(
+    VOID);
 
 VOID
-    VIDEO_ToggleFullscreen(
-        VOID);
+VIDEO_ToggleFullscreen(
+    VOID);
 
 VOID
-    VIDEO_SaveScreenshot(
-        VOID);
+VIDEO_SaveScreenshot(
+    VOID);
 
 VOID
-    VIDEO_BackupScreen(
-        VOID);
+VIDEO_BackupScreen(
+    VOID);
 
 VOID
-    VIDEO_RestoreScreen(
-        VOID);
+VIDEO_RestoreScreen(
+    VOID);
 
 VOID VIDEO_ShakeScreen(
     WORD wShakeTime,

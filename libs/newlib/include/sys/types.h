@@ -1,4 +1,4 @@
-/* unified sys/types.h: 
+/* unified sys/types.h:
    start with sef's sysvi386 version.
    merge go32 version -- a few ifdefs.
    h8300hms, h8300xray, and sysvnecv70 disagree on the following types:
@@ -10,8 +10,8 @@
    typedef int mode_t;
    typedef int caddr_t;
 
-   however, these aren't "reasonable" values, the sysvi386 ones make far 
-   more sense, and should work sufficiently well (in particular, h8300 
+   however, these aren't "reasonable" values, the sysvi386 ones make far
+   more sense, and should work sufficiently well (in particular, h8300
    doesn't have a stat, and the necv70 doesn't matter.) -- eichin
  */
 
@@ -127,17 +127,15 @@ typedef _TIME_T_ time_t;
 #define __timespec_defined
 /* Time Value Specification Structures, P1003.1b-1993, p. 261 */
 
-struct timespec
-{
-  time_t tv_sec; /* Seconds */
-  long tv_nsec;  /* Nanoseconds */
+struct timespec {
+    time_t tv_sec; /* Seconds */
+    long tv_nsec;  /* Nanoseconds */
 };
 #endif
 
-struct itimerspec
-{
-  struct timespec it_interval; /* Timer period */
-  struct timespec it_value;    /* Timer expiration */
+struct itimerspec {
+    struct timespec it_interval; /* Timer period */
+    struct timespec it_value;    /* Timer expiration */
 };
 
 #ifndef __daddr_t_defined
@@ -251,9 +249,8 @@ typedef long fd_mask;
 
 /* We use a macro for fd_set so that including Sockets.h afterwards
    can work.  */
-typedef struct _types_fd_set
-{
-  fd_mask fds_bits[howmany(FD_SETSIZE, NFDBITS)];
+typedef struct _types_fd_set {
+    fd_mask fds_bits[howmany(FD_SETSIZE, NFDBITS)];
 } _types_fd_set;
 
 #define fd_set _types_fd_set
@@ -289,7 +286,7 @@ typedef long suseconds_t;
 #include <sys/features.h>
 
 /* Cygwin will probably never have full posix compliance due to little things
- * like an inability to set the stackaddress. Cygwin is also using void *  
+ * like an inability to set the stackaddress. Cygwin is also using void *
  * pointers rather than structs to ensure maximum binary compatability with
  * previous releases.
  * This means that we don't use the types defined here, but rather in
@@ -315,8 +312,8 @@ typedef __uint32_t pthread_t; /* identify a thread */
 
 /* P1003.1c/D10, p. 111 */
 #define PTHREAD_INHERIT_SCHED 1  /* scheduling policy and associated */
-                                 /*   attributes are inherited from */
-                                 /*   the calling thread. */
+/*   attributes are inherited from */
+/*   the calling thread. */
 #define PTHREAD_EXPLICIT_SCHED 2 /* set from provided attribute object */
 
 /* P1003.1c/D10, p. 141 */
@@ -328,40 +325,38 @@ typedef __uint32_t pthread_t; /* identify a thread */
 #endif
 
 #if defined(__XMK__)
-typedef struct pthread_attr_s
-{
-  int contentionscope;
-  struct sched_param schedparam;
-  int detachstate;
-  void *stackaddr;
-  size_t stacksize;
+typedef struct pthread_attr_s {
+    int contentionscope;
+    struct sched_param schedparam;
+    int detachstate;
+    void *stackaddr;
+    size_t stacksize;
 } pthread_attr_t;
 
 #define PTHREAD_STACK_MIN 200
 
 #else /* !defined(__XMK__) */
-typedef struct
-{
-  int is_initialized;
-  void *stackaddr;
-  int stacksize;
-  int contentionscope;
-  int inheritsched;
-  int schedpolicy;
-  struct sched_param schedparam;
+typedef struct {
+    int is_initialized;
+    void *stackaddr;
+    int stacksize;
+    int contentionscope;
+    int inheritsched;
+    int schedpolicy;
+    struct sched_param schedparam;
 #if defined(__rtems__)
-  size_t guardsize;
+    size_t guardsize;
 #endif
 
-/* P1003.4b/D8, p. 54 adds cputime_clock_allowed attribute.  */
+    /* P1003.4b/D8, p. 54 adds cputime_clock_allowed attribute.  */
 #if defined(_POSIX_THREAD_CPUTIME)
-  int cputime_clock_allowed; /* see time.h */
+    int cputime_clock_allowed; /* see time.h */
 #endif
-  int detachstate;
+    int detachstate;
 #if defined(__rtems__)
-  size_t affinitysetsize;
-  cpu_set_t *affinityset;
-  cpu_set_t affinitysetpreallocated;
+    size_t affinitysetsize;
+    cpu_set_t *affinityset;
+    cpu_set_t affinitysetpreallocated;
 #endif
 } pthread_attr_t;
 
@@ -372,8 +367,8 @@ typedef struct
 
 #define PTHREAD_PROCESS_PRIVATE 0 /* visible within only the creating process */
 #define PTHREAD_PROCESS_SHARED 1  /* visible too all processes with access to */
-                                  /*   the memory where the resource is */
-                                  /*   located */
+/*   the memory where the resource is */
+/*   located */
 #endif
 
 #if defined(_POSIX_THREAD_PRIO_PROTECT)
@@ -413,7 +408,7 @@ typedef struct
  */
 #define PTHREAD_MUTEX_RECURSIVE 1
 
-/* 
+/*
  * This type of mutex provides error checking. A thread attempting
  * to relock this mutex without first unlocking it shall return with an
  * error. A thread attempting to unlock a mutex which another thread has
@@ -437,28 +432,26 @@ typedef struct
 #if defined(__XMK__)
 typedef unsigned int pthread_mutex_t; /* identify a mutex */
 
-typedef struct
-{
-  int type;
+typedef struct {
+    int type;
 } pthread_mutexattr_t;
 
 #else /* !defined(__XMK__) */
 typedef __uint32_t pthread_mutex_t; /* identify a mutex */
 
-typedef struct
-{
-  int is_initialized;
+typedef struct {
+    int is_initialized;
 #if defined(_POSIX_THREAD_PROCESS_SHARED)
-  int process_shared; /* allow mutex to be shared amongst processes */
+    int process_shared; /* allow mutex to be shared amongst processes */
 #endif
 #if defined(_POSIX_THREAD_PRIO_PROTECT)
-  int prio_ceiling;
-  int protocol;
+    int prio_ceiling;
+    int protocol;
 #endif
 #if defined(_UNIX98_THREAD_MUTEX_ATTRIBUTES)
-  int type;
+    int type;
 #endif
-  int recursive;
+    int recursive;
 } pthread_mutexattr_t;
 #endif /* !defined(__XMK__) */
 
@@ -466,11 +459,10 @@ typedef struct
 
 typedef __uint32_t pthread_cond_t; /* identify a condition variable */
 
-typedef struct
-{
-  int is_initialized;
+typedef struct {
+    int is_initialized;
 #if defined(_POSIX_THREAD_PROCESS_SHARED)
-  int process_shared; /* allow this to be shared amongst processes */
+    int process_shared; /* allow this to be shared amongst processes */
 #endif
 } pthread_condattr_t; /* a condition attribute object */
 
@@ -478,10 +470,9 @@ typedef struct
 
 typedef __uint32_t pthread_key_t; /* thread-specific data keys */
 
-typedef struct
-{
-  int is_initialized; /* is this structure initialized? */
-  int init_executed;  /* has the initialization routine been run? */
+typedef struct {
+    int is_initialized; /* is this structure initialized? */
+    int init_executed;  /* has the initialization routine been run? */
 } pthread_once_t;     /* dynamic package initialization */
 #else
 #if defined(__CYGWIN__)
@@ -493,11 +484,10 @@ typedef struct
 
 #if defined(_POSIX_BARRIERS)
 typedef __uint32_t pthread_barrier_t; /* POSIX Barrier Object */
-typedef struct
-{
-  int is_initialized; /* is this structure initialized? */
+typedef struct {
+    int is_initialized; /* is this structure initialized? */
 #if defined(_POSIX_THREAD_PROCESS_SHARED)
-  int process_shared; /* allow this to be shared amongst processes */
+    int process_shared; /* allow this to be shared amongst processes */
 #endif
 } pthread_barrierattr_t;
 #endif /* defined(_POSIX_BARRIERS) */
@@ -513,11 +503,10 @@ typedef __uint32_t pthread_spinlock_t; /* POSIX Spin Lock Object */
 
 #if defined(_POSIX_READER_WRITER_LOCKS)
 typedef __uint32_t pthread_rwlock_t; /* POSIX RWLock Object */
-typedef struct
-{
-  int is_initialized; /* is this structure initialized? */
+typedef struct {
+    int is_initialized; /* is this structure initialized? */
 #if defined(_POSIX_THREAD_PROCESS_SHARED)
-  int process_shared; /* allow this to be shared amongst processes */
+    int process_shared; /* allow this to be shared amongst processes */
 #endif
 } pthread_rwlockattr_t;
 #endif /* defined(_POSIX_READER_WRITER_LOCKS) */
