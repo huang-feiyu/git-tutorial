@@ -5,61 +5,50 @@ FPU fpu;
 // special values
 FLOAT p_zero, n_zero, p_inf, n_inf, p_nan, n_nan;
 
-// the last three bits of the significand are reserved for the GRS bits
+// normalization:
+// sig_grs: the last three bits of the significand are reserved for the GRS bits
 inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs) {
-
-    // normalization
-    bool overflow = false; // true if the result is INFINITY or 0 during normalize
+    // true if the result is INFINITY or 0 during normalize
+    bool overflow = false;
 
     if ((sig_grs >> (23 + 3)) > 1 || exp < 0) {
         // normalize toward right
         while ((((sig_grs >> (23 + 3)) > 1) && exp < 0xff) // condition 1
                 ||										   // or
-                (sig_grs > 0x04 && exp < 0)				   // condition 2
-              ) {
-
-            /* TODO: shift right, pay attention to sticky bit*/
-            printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-            fflush(stdout);
-            assert(0);
+                (sig_grs > 0x04 && exp < 0)) {             // condition 2
+            bool sticky = sig_grs & 0x1;
+            sig_grs >>= 1;
+            sig_grs |= sticky;
+            exp++;
         }
-
         if (exp >= 0xff) {
-            /* TODO: assign the number to infinity */
-            printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-            fflush(stdout);
-            assert(0);
             overflow = true;
+            sig_grs = 0;
+            exp = 0xff;
         }
         if (exp == 0) {
             // we have a denormal here, the exponent is 0, but means 2^-126,
             // as a result, the significand should shift right once more
-            /* TODO: shift right, pay attention to sticky bit*/
-            printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-            fflush(stdout);
-            assert(0);
+            bool sticky = sig_grs & 0x1;
+            sig_grs >>= 1;
+            sig_grs |= sticky;
         }
         if (exp < 0) {
-            /* TODO: assign the number to zero */
-            printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-            fflush(stdout);
-            assert(0);
             overflow = true;
+            sig_grs = 0;
+            exp = 0;
         }
     } else if (((sig_grs >> (23 + 3)) == 0) && exp > 0) {
         // normalize toward left
         while (((sig_grs >> (23 + 3)) == 0) && exp > 0) {
-            /* TODO: shift left */
-            printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-            fflush(stdout);
-            assert(0);
+            sig_grs <<= 1;
+            exp--;
         }
-        if (exp == 0) {
-            // denormal
-            /* TODO: shift right, pay attention to sticky bit*/
-            printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-            fflush(stdout);
-            assert(0);
+        if (exp == 0) { // denormal
+            // shift right
+            bool sticky = sig_grs & 0x1;
+            sig_grs >>= 1;
+            sig_grs |= sticky;
         }
     } else if (exp == 0 && sig_grs >> (23 + 3) == 1) {
         // two denormals result in a normal
@@ -67,16 +56,35 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
     }
 
     if (!overflow) {
-        /* TODO: round up and remove the GRS bits */
-        printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-        fflush(stdout);
-        assert(0);
+        uint16_t grs = sig_grs & 0x7;
+        bool if_plus = ((grs < 0x4) || ((grs == 0x4) && ((sig_grs & 0x8) == 0)));
+        if (if_plus) {
+            sig_grs >>= 3; // remove grs
+        } else {
+            sig_grs = (sig_grs >> 3) + 1;
+            if (sig_grs == 0x1000000) {
+                if (exp < 0xff) {
+                    sig_grs >>= 1; // normalize
+                    exp++;
+                } else {
+                    // overflow
+                    sig_grs = 0;
+                    exp = 0xff;
+                }
+            }
+        }
     }
 
     FLOAT f;
     f.sign = sign;
     f.exponent = (uint32_t)(exp & 0xff);
     f.fraction = sig_grs; // here only the lowest 23 bits are kept
+
+    // debug
+    // printf("
+===stu===
+val: %u %3u %8u
+", f.sign, f.exponent, f.fraction);
     return f.val;
 }
 
@@ -94,14 +102,14 @@ CORNER_CASE_RULE corner_add[] = {
     {N_NAN_F, P_NAN_F, P_NAN_F},
 };
 
-// a + b
+// return IEEE 754: a + b
 uint32_t internal_float_add(uint32_t b, uint32_t a) {
 
     // corner cases
     int i = 0;
     for (; i < sizeof(corner_add) / sizeof(CORNER_CASE_RULE); i++) {
         if (a == corner_add[i].a && b == corner_add[i].b)
-            return corner_add[i].res;
+            return corner_add[i].res; // INF or NAN
     }
     if (a == P_ZERO_F || a == N_ZERO_F) {
         return b;
@@ -113,7 +121,18 @@ uint32_t internal_float_add(uint32_t b, uint32_t a) {
     FLOAT f, fa, fb;
     fa.val = a;
     fb.val = b;
-    // infity, NaN
+    // debug
+    // FLOAT temp;
+    // temp.fval = fa.fval + fb.fval;
+    // printf("
+===a+b===
+a  : %u %3u %8u
+b  : %u %3u %8u
+", fa.sign, fa.exponent, fa.fraction, fb.sign, fb.exponent, fb.fraction);
+    // printf("===ref===
+val: %u %3u %8u", temp.sign, temp.exponent, temp.fraction);
+
+    // infinity, NaN
     if (fa.exponent == 0xff) {
         return a;
     }
@@ -127,6 +146,7 @@ uint32_t internal_float_add(uint32_t b, uint32_t a) {
     }
 
     uint32_t sig_a, sig_b, sig_res;
+    // DENORM has no implied 1
     sig_a = fa.fraction;
     if (fa.exponent != 0)
         sig_a |= 0x800000; // the implied 1
@@ -134,18 +154,15 @@ uint32_t internal_float_add(uint32_t b, uint32_t a) {
     if (fb.exponent != 0)
         sig_b |= 0x800000; // the implied 1
 
-    // alignment shift for fa
+    // alignment shift for fa (fa < fb, so fa need a shift)
     uint32_t shift = 0;
-
-    /* TODO: shift = ? */
-    printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-    fflush(stdout);
-    assert(0);
+    shift = fb.exponent + (fb.exponent == 0) - fa.exponent - (fa.exponent == 0);
     assert(shift >= 0);
 
-    sig_a = (sig_a << 3); // guard, round, sticky
-    sig_b = (sig_b << 3);
+    sig_a <<= 3; // guard, round, sticky
+    sig_b <<= 3;
 
+    // set to 1 if any bit in sig_a lower than round is 1
     uint32_t sticky = 0;
     while (shift > 0) {
         sticky = sticky | (sig_a & 0x1);
@@ -255,11 +272,8 @@ uint32_t internal_float_mul(uint32_t b, uint32_t a) {
 
     sig_res = sig_a * sig_b; // 24b * 24b
     uint32_t exp_res = 0;
+    exp_res = fa.exponent + fb.exponent - 127 - 20;
 
-    /* TODO: exp_res = ? leave space for GRS bits. */
-    printf("\e[0;31mPlease implement me at fpu.c\e[0m\n");
-    fflush(stdout);
-    assert(0);
     return internal_normalize(f.sign, exp_res, sig_res);
 }
 
@@ -277,6 +291,7 @@ CORNER_CASE_RULE corner_div[] = {
     {P_INF_F, N_INF_F, N_NAN_F},
     {N_INF_F, N_INF_F, N_NAN_F},
 };
+
 // a / b
 uint32_t internal_float_div(uint32_t b, uint32_t a) {
 
@@ -382,7 +397,8 @@ void fpu_sub(uint32_t val) {
     float *a = (float*)&fpu.regStack[fpu.status.top].val;
     float *b = (float*)&val;
     float c = *a - *b;
-    //printf("f %f - %f = %f\n", *a, *b, c);
+    //printf("f %f - %f = %f
+", *a, *b, c);
     uint32_t *d = (uint32_t *)&c;
     fpu.regStack[fpu.status.top].val = *d;
     */
@@ -418,7 +434,8 @@ void fpu_div(uint32_t val) {
     float *a = (float*)&fpu.regStack[fpu.status.top].val;
     float *b = (float*)&val;
     float c = *a / *b;
-    // printf("f %f / %f = %f\n", *a, *b, c);
+    // printf("f %f / %f = %f
+", *a, *b, c);
     uint32_t *d = (uint32_t *)&c;
     fpu.regStack[fpu.status.top].val = *d;
     */
@@ -443,16 +460,20 @@ void fpu_cmp(uint32_t idx) {
     float *b = (float *)&fpu.regStack[idx].val;
     if (*a > *b) {
         fpu.status.c0 = fpu.status.c2 = fpu.status.c3 = 0;
-        //printf("f %f > %f\n", *a, *b);
-        //printf("f %x > %x\n", *((uint32_t *)a), *((uint32_t *)b));
+        //printf("f %f > %f
+", *a, *b);
+        //printf("f %x > %x
+", *((uint32_t *)a), *((uint32_t *)b));
     } else if (*a < *b) {
         fpu.status.c0 = 1;
         fpu.status.c2 = fpu.status.c3 = 0;
-        //printf("f %f < %f\n", *a, *b);
+        //printf("f %f < %f
+", *a, *b);
     } else {
         fpu.status.c0 = fpu.status.c2 = 0;
         fpu.status.c3 = 1;
-        //printf("f %f == %f\n", *a, *b);
+        //printf("f %f == %f
+", *a, *b);
     }
 }
 
