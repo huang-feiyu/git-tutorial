@@ -6,15 +6,15 @@
 // define the structure of registers
 typedef struct {
     // general purpose registers
-    struct {
-        struct {
-            struct {
-                uint32_t _32;
-                uint16_t _16;
-                uint8_t _8[2];
+    union {
+        union {
+            union {
+                uint32_t _32; // 32 bits => a virtual register
+                uint16_t _16; // 16L
+                uint8_t _8[2]; // 8 low in 16L, 8 high in 16L
             };
             uint32_t val;
-        } gpr[8];
+        } gpr[8]; // registers array
         struct {
             // do not change the order of the registers
             uint32_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
