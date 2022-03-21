@@ -1,5 +1,7 @@
 # NEMU Lab
 
+> [Git-Tutorial](https://xn--29s704loyd.com/2022/03/19/Git-Tutorial/)
+
 本仓库为南京大学 [icspa-public](https://github.com/ics-nju-wl/icspa-public) 实验代码。
 
 在 [docs](./docs) 中将会记录每一个 PA 的具体实现。
