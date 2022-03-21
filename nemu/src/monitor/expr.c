@@ -11,32 +11,47 @@
 #include <regex.h>
 
 enum {
-    NOTYPE = 256,
+    NOTYPE = 256, // <SPACE>
     EQ,
+    NEQ,
     NUM,
+    HEX,
     REG,
-    SYMB
-
-    /* TODO: Add more token types */
-
+    AND,
+    OR,
+    NOT,
+    LETTER,
+    DEREF,
+    NEG
 };
 
 static struct rule {
     char *regex;
     int token_type;
 } rules[] = {
-
-    /* TODO: Add more rules.
-     * Pay attention to the precedence level of different rules.
-     */
-
     {" +", NOTYPE}, // white space
-    {"\\+", '+'},
+    {"==", EQ},
+    {"!=", NEQ},
+    {"\b[0-9]+\b", NUM},
+    {"\b0[xX][0-9a-fA-F]+\b", HEX},
+    {"\$[a-zA-Z]+", REG},
+    {"\+", '+'},
+    {"-", '-'}, // minus or negative
+    {"\*", '*'}, // multiply or De-reference
+    {"/", '/'},
+    {"\(", '('},
+    {"\)", ')'},
+    {"&&", AND},
+    {"\|\|", OR},
+    {"!", NOT},
+    {"\b[a-zA-Z]+\b", LETTER}
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]))
 
 static regex_t re[NR_REGEX];
+
+void is_op(int);
 
 /* Rules are used for more times.
  * Therefore we compile them only once before any usage.
@@ -70,48 +85,4 @@ static bool make_token(char *e) {
 
     nr_token = 0;
 
-    while (e[position] != '\0') {
-        /* Try all rules one by one. */
-        for (i = 0; i < NR_REGEX; i++) {
-            if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
-                char *substr_start = e + position;
-                int substr_len = pmatch.rm_eo;
-
-                printf("match regex[%d] at position %d with len %d: %.*s", i, position, substr_len, substr_len, substr_start);
-                position += substr_len;
-
-                /* TODO: Now a new token is recognized with rules[i].
-                 * Add codes to perform some actions with this token.
-                 */
-
-                switch (rules[i].token_type) {
-                default:
-                    tokens[nr_token].type = rules[i].token_type;
-                    nr_token++;
-                }
-
-                break;
-            }
-        }
-
-        if (i == NR_REGEX) {
-            printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
-            return false;
-        }
-    }
-
-    return true;
-}
-
-uint32_t expr(char *e, bool *success) {
-    if (!make_token(e)) {
-        *success = false;
-        return 0;
-    }
-
-    printf("\nPlease implement expr at expr.c\n");
-    fflush(stdout);
-    assert(0);
-
-    return 0;
-}
+    while (e[position] != '
